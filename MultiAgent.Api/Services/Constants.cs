@@ -171,7 +171,7 @@ public static class Constants
                                              {
                                                "openapi": "3.0.1",
                                                "info": {
-                                                 "title": "OverviewAzureAiAgentService.SalesApi | v1",
+                                                 "title": "Products.Api | v1",
                                                  "version": "1.0.0"
                                                },
                                                "servers": [
@@ -183,7 +183,7 @@ public static class Constants
                                                  "/sales": {
                                                    "get": {
                                                      "tags": [
-                                                       "OverviewAzureAiAgentService.SalesApi"
+                                                       "Products.Api"
                                                      ],
                                                      "operationId": "GetSales",
                                                      "parameters": [
@@ -248,7 +248,7 @@ public static class Constants
                                                },
                                                "tags": [
                                                  {
-                                                   "name": "OverviewAzureAiAgentService.SalesApi"
+                                                   "name": "Products.Api"
                                                  }
                                                ]
                                              }

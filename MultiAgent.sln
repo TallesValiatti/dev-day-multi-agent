@@ -7,6 +7,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAgent.Api", "MultiAgen
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultiAgent.WebApp", "MultiAgent.WebApp\MultiAgent.WebApp.csproj", "{955C03D1-9021-4A78-BF5A-9BF7B81D212C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WebApis", "WebApis", "{2BBDF59D-7F59-4363-8FBD-7470C93D907F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Api", "Products.Api\Products.Api.csproj", "{30C8D801-84C7-4E1A-B86C-453852E46F2F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +28,12 @@ Global
 		{955C03D1-9021-4A78-BF5A-9BF7B81D212C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{955C03D1-9021-4A78-BF5A-9BF7B81D212C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{955C03D1-9021-4A78-BF5A-9BF7B81D212C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{30C8D801-84C7-4E1A-B86C-453852E46F2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{30C8D801-84C7-4E1A-B86C-453852E46F2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{30C8D801-84C7-4E1A-B86C-453852E46F2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{30C8D801-84C7-4E1A-B86C-453852E46F2F}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{30C8D801-84C7-4E1A-B86C-453852E46F2F} = {2BBDF59D-7F59-4363-8FBD-7470C93D907F}
 	EndGlobalSection
 EndGlobal

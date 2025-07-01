@@ -1,0 +1,10 @@
+@host = http://localhost:5172
+
+### Get all products
+GET {{host}}/api/products
+Accept: application/json
+
+### Get OPENAPI schema
+GET {{host}}/openapi/v1.json
+Accept: application/json
+
