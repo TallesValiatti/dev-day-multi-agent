@@ -1,0 +1,161 @@
+﻿@page "/"
+@using MultiAgent.WebApp.Models
+@using MultiAgent.WebApp.Services
+@using Markdig;
+@inject AppService AppService
+
+<PageTitle>Chat</PageTitle>
+
+<div class="d-flex flex-column p-3" style="height: 90vh;">
+    @if (IsLoading)
+    {
+        <div class="text-muted small mb-2">
+            <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+            Loading agent...
+        </div>
+    }
+
+    <div class="flex-grow-1 border rounded p-3 mb-3 overflow-auto" style="min-height: 0;">
+        @foreach (var message in Messages)
+        {
+            <div class="mb-2 p-2 rounded"
+                 style="max-width: 75%; @(string.Compare(message.Role, "User", StringComparison.InvariantCultureIgnoreCase) == 0
+                                            ? "background-color: #0d6efd; color: white; margin-left: auto;"
+                                            : "background-color: #f8f9fa; color: black;")">
+                @((MarkupString)Markdown.ToHtml(message.Content, new MarkdownPipelineBuilder().UseAdvancedExtensions().Build()))
+            </div>
+        }
+    </div>
+
+    <div class="d-flex">
+        <input class="form-control me-2"
+               @bind="UserInput"
+               @bind:event="oninput"
+               placeholder="Type your message..."
+               disabled="@IsLoading"
+               @onkeydown="HandleKeyDown" />
+
+        @if (!IsLoading)
+        {
+            <button class="btn btn-secondary me-2"
+                    @onclick="ResetThread">
+                Reset
+            </button>
+
+            <button class="btn btn-primary"
+                    @onclick="SendMessage">
+                Send
+            </button>
+        }
+        else
+        {
+            <button class="btn btn-secondary me-2"
+                    disabled>
+                Reset
+            </button>
+
+            <button class="btn btn-primary"
+                    disabled>
+                Send
+            </button>
+        }
+        
+    </div>
+</div>
+
+@code {
+    private Agent _agent = null!;
+    private Thread _thread = null!;
+    private string UserInput { get; set; } = string.Empty;
+    private List<Message> Messages { get; set; } = [];
+    private bool IsLoading { get; set; } = false;
+
+    private static string WelcomeMessage => "👋 **Hi!** How can I assist you today?";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await CreateNewAgent();
+    }
+
+    private async Task OnAgentTypeChanged(ChangeEventArgs e)
+    {
+        await CreateNewAgent();
+    }
+
+    private async Task CreateNewAgent()
+    {
+        IsLoading = true;
+        UserInput = string.Empty;
+        StateHasChanged();
+
+        Messages.Clear();
+
+        var createAgentRequest = new CreateAgentRequest
+        {
+            Name = "Orchestrator agent ",
+            Instructions = Constants.Instructions
+        };
+        
+        _agent = await AppService.CreateAgentAsync(createAgentRequest);
+        _thread = await AppService.CreateThreadAsync();
+
+        Messages.Add(new Message
+        {
+            Content = WelcomeMessage,
+            Role = "Assistant"
+        });
+
+        IsLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task SendMessage()
+    {
+        if (string.IsNullOrWhiteSpace(UserInput))
+            return;
+
+        var userMessage = new Message { Content = UserInput, Role = "User" };
+        Messages.Add(userMessage);
+
+        var input = UserInput;
+        UserInput = string.Empty;
+
+        var response = await AppService.CreateRunAsync(new CreateRunRequest()
+        {
+            ThreadId = _thread.Id,
+            AgentId = _agent.Id,
+            Message = input
+        });
+
+        Messages.Add(response);
+    }
+
+    private async Task ResetThread()
+    {
+        if (IsLoading) return;
+
+        IsLoading = true;
+        UserInput = string.Empty;
+        StateHasChanged();
+
+        Messages.Clear();
+        _thread = await AppService.CreateThreadAsync();
+
+        Messages.Add(new Message
+        {
+            Content = WelcomeMessage,
+            Role = "Assistant"
+        });
+
+        IsLoading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task HandleKeyDown(KeyboardEventArgs e)
+    {
+        if (e is { Key: "Enter", ShiftKey: false } && !IsLoading)
+        {
+            await SendMessage();
+        }
+    }
+}

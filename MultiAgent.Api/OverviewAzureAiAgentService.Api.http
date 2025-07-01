@@ -1,0 +1,27 @@
+@Api_HostAddress = https://localhost:7044
+
+POST {{Api_HostAddress}}/agents
+Content-Type: application/json
+
+{
+  "name": "my-agent",
+  "instructions": "Your are an AI agent that helps users with their tasks."
+}
+
+###
+POST {{Api_HostAddress}}/threads
+Content-Type: application/json
+
+###
+POST {{Api_HostAddress}}/run
+Content-Type: application/json
+
+{
+  "agentId": "asst_xLKiLIrYdwV1sJDTNwxnCg4p",
+  "threadId": "thread_BTpZc1pe4tIbCragSv7z8Y7V",
+  "message": "What is the capital of France?"
+}
+
+###
+GET {{Api_HostAddress}}/threads/thread_BTpZc1pe4tIbCragSv7z8Y7V/messages
+Content-Type: application/json
