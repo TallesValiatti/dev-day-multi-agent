@@ -30,8 +30,8 @@ public class AgentService(IConfiguration configuration)
 
         var agentResponse = await client.Administration.CreateAgentAsync(
             model: aiModel,
-            name: request.Name,
-            instructions: request.Instructions);
+            name: "",
+            instructions: "");
 
         return new Agent(
             agentResponse.Value.Id,

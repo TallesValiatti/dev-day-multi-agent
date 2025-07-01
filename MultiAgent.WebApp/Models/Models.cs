@@ -1,10 +1,6 @@
 namespace MultiAgent.WebApp.Models;
 
-public class CreateAgentRequest
-{
-    public string Name { get; set; } = null!;
-    public string Instructions { get; set; } = null!;
-}
+public class CreateAgentRequest;
 
 public class CreateRunRequest
 {

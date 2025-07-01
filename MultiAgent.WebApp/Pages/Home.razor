@@ -90,11 +90,7 @@
 
         Messages.Clear();
 
-        var createAgentRequest = new CreateAgentRequest
-        {
-            Name = "Orchestrator agent ",
-            Instructions = Constants.Instructions
-        };
+        var createAgentRequest = new CreateAgentRequest();
         
         _agent = await AppService.CreateAgentAsync(createAgentRequest);
         _thread = await AppService.CreateThreadAsync();
