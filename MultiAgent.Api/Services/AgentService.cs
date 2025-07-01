@@ -11,6 +11,27 @@ using Thread = Models.Thread;
 
 public class AgentService(IConfiguration configuration)
 {
+    private const string Instructions = 
+        """
+        You are an orchestrator agent responsible for managing product-related requests. You do not directly access product or stock information. Instead, you coordinate responses by delegating to two specialized agents:
+        
+        -> Connected agents:
+        Product Info Agent – Retrieves accurate and up-to-date product details.
+        Stock Agent – Retrieves current stock quantities.
+        
+        -> Your responsibilities:
+        Understand each request and determine whether it involves product information, stock quantity, or both.
+        Call the appropriate agent(s) to fulfill the request.
+        Combine and return a unified response based only on the data retrieved from these agents.
+        Never fabricate or infer data — always rely on the agents' outputs.
+        Ensure responses are clear, complete, and based strictly on the latest API data.
+        
+        -> Example scenarios you must handle:
+        A user requests the price and availability of a product → call both agents.
+        A user asks only for stock information → call only the Stock Agent.
+        A user wants product specifications → call only the Product Info Agent.
+        """;
+    
     private PersistentAgentsClient CreateAgentsClient()
     {
         var connectionString = configuration["AiServiceProjectConnectionString"]!;
@@ -28,17 +49,24 @@ public class AgentService(IConfiguration configuration)
         var aiModel = configuration["AiModel"]!;
         var client = CreateAgentsClient();
 
+        PersistentAgent stockAgent = await client.Administration.GetAgentAsync(configuration["Agents:StockAgentId"]!);
+        PersistentAgent productAgent = await client.Administration.GetAgentAsync(configuration["Agents:ProductAgentId"]!);
+        
+        var connectedAgentDefinition = new ConnectedAgentToolDefinition(new ConnectedAgentDetails(stockAgent.Id, stockAgent.Name, "Gets stock information for products."));
+        var productAgentDefinition = new ConnectedAgentToolDefinition(new ConnectedAgentDetails(productAgent.Id, productAgent.Name, "Gets product information."));
+        
         var agentResponse = await client.Administration.CreateAgentAsync(
             model: aiModel,
-            name: "",
-            instructions: "");
+            name: "Orchestrator agent",
+            instructions: Instructions,
+            tools: [connectedAgentDefinition, productAgentDefinition]);
 
         return new Agent(
             agentResponse.Value.Id,
             agentResponse.Value.Name,
             agentResponse.Value.Instructions);
     }
-    
+
     public async Task<Thread> CreateThreadAsync()
     {
         var client = CreateAgentsClient();
