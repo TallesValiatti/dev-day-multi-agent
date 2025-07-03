@@ -51,15 +51,21 @@ public class AgentService(IConfiguration configuration)
 
         PersistentAgent stockAgent = await client.Administration.GetAgentAsync(configuration["Agents:StockAgentId"]!);
         PersistentAgent productAgent = await client.Administration.GetAgentAsync(configuration["Agents:ProductAgentId"]!);
+        PersistentAgent priceAgent = await client.Administration.GetAgentAsync(configuration["Agents:PriceAgentId"]!);
         
         var connectedAgentDefinition = new ConnectedAgentToolDefinition(new ConnectedAgentDetails(stockAgent.Id, stockAgent.Name, "Gets stock information for products."));
         var productAgentDefinition = new ConnectedAgentToolDefinition(new ConnectedAgentDetails(productAgent.Id, productAgent.Name, "Gets product information."));
+        var priceAgentDefinition = new ConnectedAgentToolDefinition(new ConnectedAgentDetails(priceAgent.Id, priceAgent.Name, "Gets product price information."));
         
         var agentResponse = await client.Administration.CreateAgentAsync(
             model: aiModel,
             name: "Orchestrator agent",
             instructions: Instructions,
-            tools: [connectedAgentDefinition, productAgentDefinition]);
+            tools: [
+                connectedAgentDefinition, 
+                productAgentDefinition,
+                priceAgentDefinition
+            ]);
 
         return new Agent(
             agentResponse.Value.Id,

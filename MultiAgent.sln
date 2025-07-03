@@ -13,6 +13,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Products.Api", "Products.Ap
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stock.Api", "Stock.Api\Stock.Api.csproj", "{DB1ED2F3-1872-4E90-8DA8-77555D3C10A5}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Price.Api", "Price.Api", "{37D7A5E3-8E5B-429A-BF7A-C37B31A3D6C3}"
+	ProjectSection(SolutionItems) = preProject
+		Price.Api\pom.xml = Price.Api\pom.xml
+		Price.Api\src\main\resources\config.properties = Price.Api\src\main\resources\config.properties
+		Price.Api\src\main\java\com\agents\configuration\AppConfiguration.java = Price.Api\src\main\java\com\agents\configuration\AppConfiguration.java
+		Price.Api\src\main\java\com\agents\openapi\OpenApiPluginFactory.java = Price.Api\src\main\java\com\agents\openapi\OpenApiPluginFactory.java
+		Price.Api\src\main\java\com\agents\controller\PriceController.java = Price.Api\src\main\java\com\agents\controller\PriceController.java
+		Price.Api\src\main\java\com\agents\model\Price.java = Price.Api\src\main\java\com\agents\model\Price.java
+		Price.Api\src\main\java\com\agents\model\Prices.java = Price.Api\src\main\java\com\agents\model\Prices.java
+		Price.Api\src\main\java\com\agents\App.java = Price.Api\src\main\java\com\agents\App.java
+		Price.Api\src\main\java\com\agents\error\ErrorResponse.java = Price.Api\src\main\java\com\agents\error\ErrorResponse.java
+		Price.Api\src\main\java\com\agents\error\NotFoundException.java = Price.Api\src\main\java\com\agents\error\NotFoundException.java
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +56,6 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{30C8D801-84C7-4E1A-B86C-453852E46F2F} = {2BBDF59D-7F59-4363-8FBD-7470C93D907F}
 		{DB1ED2F3-1872-4E90-8DA8-77555D3C10A5} = {2BBDF59D-7F59-4363-8FBD-7470C93D907F}
+		{37D7A5E3-8E5B-429A-BF7A-C37B31A3D6C3} = {2BBDF59D-7F59-4363-8FBD-7470C93D907F}
 	EndGlobalSection
 EndGlobal
