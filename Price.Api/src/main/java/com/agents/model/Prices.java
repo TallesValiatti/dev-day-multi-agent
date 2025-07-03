@@ -8,13 +8,13 @@ import com.agents.error.NotFoundException;
 public class Prices {
 
     private static final List<Price> prices = List.of(
-        new Price(UUID.randomUUID().toString(), "WH001", "Wireless Headphones" ),
-        new Price(UUID.randomUUID().toString(), "CM002", "Coffee Mug" ),
-        new Price(UUID.randomUUID().toString(), "BS003", "Bluetooth Speaker" ),
-        new Price(UUID.randomUUID().toString(), "NS004", "Notebook Set" ),
-        new Price(UUID.randomUUID().toString(), "WB005", "Water Bottle" ),
-        new Price(UUID.randomUUID().toString(), "DL006", "Desk Lamp" ),
-        new Price(UUID.randomUUID().toString(), "PC007", "Phone Case")
+        new Price(UUID.randomUUID().toString(), "WH001", "12.45" ),
+        new Price(UUID.randomUUID().toString(), "CM002", "30.50" ),
+        new Price(UUID.randomUUID().toString(), "BS003", "21.40" ),
+        new Price(UUID.randomUUID().toString(), "NS004", "99.10" ),
+        new Price(UUID.randomUUID().toString(), "WB005", "10.50" ),
+        new Price(UUID.randomUUID().toString(), "DL006", "22.40" ),
+        new Price(UUID.randomUUID().toString(), "PC007", "15.55")
         );
 
 

@@ -1,5 +1,5 @@
 package com.agents.model;
 
-public record Price(String uuid, String code, String description) {
+public record Price(String uuid, String code, String price) {
     
 }

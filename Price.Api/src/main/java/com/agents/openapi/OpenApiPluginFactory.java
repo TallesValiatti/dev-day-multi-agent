@@ -45,7 +45,7 @@ public class OpenApiPluginFactory {
                         })
                         .withServer(server);
             })
-            .withDocumentationPath("/OpenAI/v1.json");
+            .withDocumentationPath("/openapi/v1.json");
         });
     }
 }
